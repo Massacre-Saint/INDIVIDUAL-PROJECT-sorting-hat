@@ -1,25 +1,46 @@
+// ARRAYS
 const students = [
   {
-    name: 'Jacob Martin',
+    name: 'Sain Varris',
     house: 'Hufflepuff',
+    crest: 'assets/hf.jpg',
+    expelled: false
   },
   {
-    name: 'Ron',
-    house: 'Gryffindor'
+    name: 'Loris Nieman',
+    house: 'Gryffindor',
+    crest: 'assets/gr.jpg',
+    expelled: false
+  },
+  {
+    name: 'Pookey Kriesendall',
+    house: 'Ravenclaw',
+    crest: 'assets/rc.jpg',
+    expelled: false
+  },
+  {
+    name: 'Harris Sertian',
+    house: 'Slytherin',
+    crest: 'assets/sl.jpg',
+    expelled: false
   }
 ];
-const houses = ['Hufflepuff', 'Gryffindor', 'Slytherin', 'Ravenclaw'];
+const voldArmy = [];
+const houses =['Hufflepuff', 'Gryffindor', 'Slytherin', 'Ravenclaw'];
+
+
+// Utility Function
 const renderToDom = (divId, textToRender) => {
   const selectedElement = document.querySelector(divId);
   selectedElement.innerHTML = textToRender;
 };
-
-const studentId = () =>
+// ID assigning
+const studentId = (array) =>
   students.forEach((student,index) => {
   student.id = index + 1;                      
 });
 
-
+// Welcome DOM Card
 const introHeader = () => {
   const domString = `
   <div class="card">
@@ -33,7 +54,20 @@ const introHeader = () => {
   `;
   renderToDom('#intro',domString);
 }
+// DOM Filter Buttons
+const filterButtons = () => {
+  const domString = `
+  <div class="filter-buttons">
+    <button id= 'Hufflepuff'>Hufflepuff</button>
+    <button id= 'Gryffindor'>Gryffindor</button>
+    <button id= 'Slytherin'>Slytherin</button>
+    <button id= 'Ravenclaw'>Ravenclaw</button>
+    <button id= 'clear'>Clear</button>
+  </div> `;
+  renderToDom('#filter-buttons', domString);
+};
 
+// Modal Form
 const addStudent = () => {
   const domString = `
   <form>
@@ -61,14 +95,16 @@ const addStudent = () => {
   renderToDom('#add-wizard', domString);
 }
 
-const studentsOnDom = () => {
+// Students on DOM
+const studentsOnDom = (students) => {
   let domString = '';
   for (const student of students) {
     domString += `
     <div class="card" style="width: 18rem;">
+    <img src="${student.crest}" class="card-img-top" alt="house crest">
         <h5>${student.name}</h5>
         <div class="card-body">
-            <p class="card-text">${student.house}</p>
+            <p class="card-text" id="house">${student.house}</p>
           </div>
           <p class="type"></p>
           <button class="btn btn-danger" id="delete--${student.id}">Expel</button>
@@ -76,6 +112,22 @@ const studentsOnDom = () => {
     `;
   }
   renderToDom('#sorted-wizard', domString);
+}
+const voldArmyDom = (array) => {
+  let domString = '';
+  for (const snake of array) {
+    domString += `
+    <div class="card" style="width: 18rem;">
+    <img src="" class="card-img-top" alt="">
+        <h5>${snake.name}</h5>
+        <div class="card-body">
+            <p class="card-text" id="house"></p>
+          </div>
+          <p class="type">Dark Army</p>
+      </div>
+    `;
+  }
+  renderToDom('#vold-army', domString);
 }
 const eventListeners = () => {
   const formModal = new bootstrap.Modal(document.querySelector('#add-wizard'));
@@ -85,14 +137,24 @@ const eventListeners = () => {
       const [method, id] = e.target.id.split('--');
       const index = students.findIndex(sortedStudent => sortedStudent.id === parseInt(id));
       if (e.target.id.includes('delete')) {
+        voldArmy.push(students[index]);
         students.splice(index,1);
         studentsOnDom(students);
+        voldArmyDom(voldArmy);
       }
     }
   });
-
-
-
+// filters
+  document.querySelector('#filter-buttons').addEventListener('click', (e) => {
+    // console.log("Ck", e.target.id);
+    if (e.target.id === 'clear') {
+      studentsOnDom(students);
+    } else if (e.target.id) {
+      const house = students.filter(taco => taco.house === e.target.id);
+      studentsOnDom(house);
+    
+    }
+  });
 
   // Form
   const form = document.querySelector('form');
@@ -100,9 +162,22 @@ const eventListeners = () => {
     e.preventDefault();
     const newStudentObj = {
       name: document.querySelector('#name').value,
-      house: houses[Math.floor(Math.random() * 4)] 
+      house: houses[Math.floor(Math.random() * 4)],
+      crest: '',
+      expelled: false
     };
-    console.log(newStudentObj);
+      if (newStudentObj.house === 'Hufflepuff') {
+        newStudentObj.crest = 'assets/hf.jpg';
+      }
+      else if (newStudentObj.house === 'Gryffindor') {
+        newStudentObj.crest = 'assets/gr.jpg';
+      }
+      else if (newStudentObj.house === 'Slytherin') {
+        newStudentObj.crest = 'assets/sl.jpg'
+      }
+      else {
+        newStudentObj.crest = 'assets/rc.jpg';
+      };
     students.push(newStudentObj);
     studentsOnDom(students);
     studentId(students);
@@ -110,9 +185,15 @@ const eventListeners = () => {
     form.reset();
   });
 }
+const startApp = () => {
 introHeader();
 addStudent();
-studentsOnDom();
-studentId();
+filterButtons();
+studentId(students);
+studentsOnDom(students);
+voldArmyDom(voldArmy);
 eventListeners();
+}
+startApp();
 console.log(students);
+console.log(voldArmy);
