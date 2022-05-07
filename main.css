@@ -1,0 +1,12 @@
+#sorted {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.main {
+  background-color: rgb(138, 79, 79);
+}
+#filter-buttons {
+display: flex;
+justify-content: center;
+}
