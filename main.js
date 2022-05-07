@@ -75,17 +75,17 @@ const addStudent = () => {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">What's you name??</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="form-floating mb-3">
-          <input class="form-control form-control-lg" type="text" placeholder="First and Last name" id="name" aria-label="enter name" required>
+          <input class="form-control form-control-lg" type="text" placeholder="First and Last name" id="name" aria-label="First and Last name" required>
           <label for="name">First and Last name </label>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sort!</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss= "modal" >Sort!</button>
         </div>
       </div>
     </div>
@@ -160,24 +160,25 @@ const eventListeners = () => {
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const newStudentObj = {
-      name: document.querySelector('#name').value,
-      house: houses[Math.floor(Math.random() * 4)],
-      crest: '',
-      expelled: false
-    };
-      if (newStudentObj.house === 'Hufflepuff') {
-        newStudentObj.crest = 'assets/hf.jpg';
-      }
-      else if (newStudentObj.house === 'Gryffindor') {
-        newStudentObj.crest = 'assets/gr.jpg';
-      }
-      else if (newStudentObj.house === 'Slytherin') {
-        newStudentObj.crest = 'assets/sl.jpg'
-      }
-      else {
-        newStudentObj.crest = 'assets/rc.jpg';
+  
+      const newStudentObj = {
+        name: document.querySelector('#name').value,
+        house: houses[Math.floor(Math.random() * 4)],
+        crest: '',
+        expelled: false
       };
+        if (newStudentObj.house === 'Hufflepuff') {
+          newStudentObj.crest = 'assets/hf.jpg';
+        }
+        else if (newStudentObj.house === 'Gryffindor') {
+          newStudentObj.crest = 'assets/gr.jpg';
+        }
+        else if (newStudentObj.house === 'Slytherin') {
+          newStudentObj.crest = 'assets/sl.jpg'
+        }
+        else {
+          newStudentObj.crest = 'assets/rc.jpg';
+        };
     students.push(newStudentObj);
     studentsOnDom(students);
     studentId(students);
@@ -186,14 +187,15 @@ const eventListeners = () => {
   });
 }
 const startApp = () => {
-introHeader();
-addStudent();
-filterButtons();
-studentId(students);
-studentsOnDom(students);
-voldArmyDom(voldArmy);
-eventListeners();
+  introHeader();
+  addStudent();
+  filterButtons();
+  studentId(students);
+  studentsOnDom(students);
+  voldArmyDom(voldArmy);
+  eventListeners();
 }
+
 startApp();
 console.log(students);
 console.log(voldArmy);
