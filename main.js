@@ -85,7 +85,7 @@ const addStudent = () => {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" data-bs-dismiss= "modal" >Sort!</button>
+          <button type="submit" class="btn btn-primary">Sort!</button>
         </div>
       </div>
     </div>
@@ -130,7 +130,7 @@ const voldArmyDom = (array) => {
   renderToDom('#vold-army', domString);
 }
 const eventListeners = () => {
-  const formModal = new bootstrap.Modal(document.querySelector('#add-wizard'));
+  const formModal = new bootstrap.Modal(document.querySelector('#addStudent'));
 // Expel Button
   document.querySelector('#sorted-wizard',).addEventListener('click', (e) => {
     if (e.target.id) {

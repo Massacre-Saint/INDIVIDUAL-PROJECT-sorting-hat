@@ -1,7 +1,8 @@
 #sorted {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
   padding: 10px;
+  justify-content: space-between;
 }
 .main {
   background-color: rgb(138, 79, 79);
