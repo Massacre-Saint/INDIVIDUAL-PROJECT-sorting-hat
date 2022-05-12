@@ -48,7 +48,7 @@ const introHeader = () => {
     <div class="card-body">
       <h5 class="card-title">Begin your journey and let the Sorting Hat decide which House you belong to!</h5>
       <p class="card-text">Click the button below to begin the sorting ceremony!</p>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudent">Begin Placement!</button>
+      <button type="start" id= "sortButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudent">Begin Placement!</button>
     </div>
   </div>
   `;
@@ -65,6 +65,7 @@ const filterButtons = () => {
     <button id= 'clear'>Clear</button>
   </div> `;
   renderToDom('#filter-buttons', domString);
+  document.getElementById('filter-buttons').hidden= true;
 };
 
 // Modal Form
@@ -100,7 +101,7 @@ const studentsOnDom = (students) => {
   let domString = '';
   for (const student of students) {
     domString += `
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem;" id="hide">
     <img src="${student.crest}" class="card-img-top" alt="house crest">
         <h5>${student.name}</h5>
         <div class="card-body">
@@ -112,6 +113,7 @@ const studentsOnDom = (students) => {
     `;
   }
   renderToDom('#sorted-wizard', domString);
+  document.getElementById('sorted').hidden = true;
 }
 const voldArmyDom = (array) => {
   let domString = '';
@@ -131,6 +133,10 @@ const voldArmyDom = (array) => {
 }
 const eventListeners = () => {
   const formModal = new bootstrap.Modal(document.querySelector('#addStudent'));
+  let sortButton =document.getElementById('sortButton');
+  sortButton.addEventListener('start', (e) => {
+    
+  })
 // Expel Button
   document.querySelector('#sorted-wizard',).addEventListener('click', (e) => {
     if (e.target.id) {
@@ -143,6 +149,7 @@ const eventListeners = () => {
         voldArmyDom(voldArmy);
       }
     }
+    // deathEaterData.push(...expelledStudent)
   });
 // filters
   document.querySelector('#filter-buttons').addEventListener('click', (e) => {
@@ -160,7 +167,6 @@ const eventListeners = () => {
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-  
       const newStudentObj = {
         name: document.querySelector('#name').value,
         house: houses[Math.floor(Math.random() * 4)],
@@ -181,6 +187,8 @@ const eventListeners = () => {
         };
     students.push(newStudentObj);
     studentsOnDom(students);
+    document.getElementById('sorted').hidden = false;
+    document.getElementById('filter-buttons').hidden = false;
     studentId(students);
     formModal.hide();
     form.reset();
@@ -197,5 +205,3 @@ const startApp = () => {
 }
 
 startApp();
-console.log(students);
-console.log(voldArmy);
